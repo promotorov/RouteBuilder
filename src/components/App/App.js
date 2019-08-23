@@ -1,8 +1,9 @@
 import React from 'react';
+import RouteBuilder from '../RouteBuilder/RouteBuilder';
 
 function App() {
   return (
-    <div>Hello React!</div>
+    <RouteBuilder/>
   );
 }
 
