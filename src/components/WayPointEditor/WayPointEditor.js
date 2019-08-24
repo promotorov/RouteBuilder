@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { InputGroup, Input } from 'reactstrap';
-import List from '../List/List';
+import DragableList from '../List/DragableList';
 
 function handleKeyPress(event) {
   // Enter
@@ -16,6 +16,10 @@ function handleItemDeleteClick(index) {
   this.setPoints(copiedArray);
 }
 
+function updatePoints(points) {
+  this.setPoints(points);
+}
+
 
 function WayPointEditor() {
 
@@ -26,7 +30,11 @@ function WayPointEditor() {
       <InputGroup>
         <Input placeholder="Новая точка маршрута" onKeyPress={event => handleKeyPress.call({points, setPoints}, event)}/>
       </InputGroup>
-      <List data={points} onDelete={handleItemDeleteClick.bind({points, setPoints})}/>
+      <DragableList
+        data={points}
+        onDelete={handleItemDeleteClick.bind({points, setPoints})}
+        onUpdate={updatePoints.bind({setPoints})}
+      />
     </div>
   );
 }
