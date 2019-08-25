@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Button } from "reactstrap";
+import { dragArrayItem } from '../../common/index';
 
 let draggedItem = {
   index: undefined,
   data: undefined
 }
+let draggedOverItemIndex;
 let items;
 
 function onDragStart(e, index) {
@@ -19,10 +21,8 @@ function onDragOver(index) {
   if (draggedItem.index === index)
     return;
 
-  let newItems = this.data.filter((item, index) => index !== draggedItem.index);
-  newItems.splice(index, 0, draggedItem.data);
-  items = [...newItems];
-
+  items = dragArrayItem(this.data, draggedItem.index, index);
+  draggedOverItemIndex = index;
 }
 
 function DragableList({data, onDelete, onUpdate}) {
@@ -32,14 +32,17 @@ function DragableList({data, onDelete, onUpdate}) {
       {
         data.map((item, index) => (
           <li key={index} onDragOver={() => onDragOver.call({data}, index)}>
-            <div
+            <span
               draggable
               onDragStart={e => onDragStart(e, index)}
-              onDragEnd={() => onUpdate(items)}
+              onDragEnd={() => onUpdate(items, draggedItem.index, draggedOverItemIndex)}
+              style={{'line-height': '30px'}}
             >
               {item}
-            </div>
-            <Button color="primary" onClick={() => onDelete(index)}>Close</Button>
+            </span>
+            <Button color="primary" onClick={() => onDelete(index)} style={{float: 'right', padding: 0}}>
+              Close
+            </Button>
           </li>
         ))
       }
