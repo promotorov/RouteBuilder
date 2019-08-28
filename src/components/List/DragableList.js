@@ -36,7 +36,7 @@ function DragableList({data, onDelete, onUpdate}) {
               draggable
               onDragStart={e => onDragStart(e, index)}
               onDragEnd={() => onUpdate(items, draggedItem.index, draggedOverItemIndex)}
-              style={{'line-height': '30px'}}
+              style={{'lineHeight': '30px'}}
             >
               {item}
             </span>
